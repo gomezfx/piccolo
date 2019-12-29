@@ -12,7 +12,6 @@
   },
   "main": "src/electron-starter.js",
   "homepage": "./",
-  
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -37,7 +36,7 @@
     ]
   },
   "devDependencies": {
-    "electron": "^7.1.7",
+    "electron": "^5.0.7",
     "foreman": "^3.0.1"
   }
 }
