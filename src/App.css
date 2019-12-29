@@ -24,13 +24,14 @@
 }
 
 img {
-  padding: 100px;
+  padding: 0;
+  padding-right: 100px;
 }
 
 ul {
   list-style: none;
   padding: 0;
-  padding: 100px;
+  padding-left: 100px;
 }
 
 li {
