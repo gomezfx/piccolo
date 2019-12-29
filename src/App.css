@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=VT323&display=swap');
+
 .App {
   text-align: center;
   height: 100vh;
   width: 100vw;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .App-logo {
@@ -19,6 +21,29 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+}
+
+img {
+  padding: 100px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  padding: 100px;
+}
+
+li {
+  padding: 10px 0 8px 0;  
+  width: 190px;
+  background: rgba(255,255,255, .9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-family: 'VT323', monospace;
+  border-radius: 3px;
+  border: 4px solid black;
 }
 
 .App-header {

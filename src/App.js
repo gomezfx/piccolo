@@ -10,7 +10,8 @@ class App extends Component {
     this.state = {
       backgroundStyle: {
           'background': '#'+(Math.random()*0xFFFFFF<<0).toString(16),
-      }
+      },
+      light: false
     }
   }
 
@@ -22,10 +23,19 @@ class App extends Component {
     })
   }
 
+  onLightClick = (e) => {
+    this.setState({
+      light: !this.state.light
+    })
+  }
+
   render() {
     return (
-      <div className="App" style={this.state.backgroundStyle} onClick={this.onClick}>
-        <img className="noselect" src={splash} height="300"/>
+      <div className="App" style={this.state.backgroundStyle} >
+        <ul>
+          <li onClick={this.onLightClick}><span>{this.state.light ? 'light on' : 'light off'}</span></li>
+        </ul>
+        <img onClick={this.onClick} className="noselect" src={splash} height="300"/>
       </div>
     );
   }
