@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import splash from './piccolo.png';
+import Clock from './components/Clock.js';
+
 class App extends Component {
 
   constructor(props) {
@@ -24,9 +26,23 @@ class App extends Component {
   }
 
   onLightClick = (e) => {
+
     this.setState({
       light: !this.state.light
+    }, () => {
+      if (this.state.light) {
+        fetch('http://localhost:4502/on')
+          .then((response) => {
+            // got response;
+          })
+      } else {
+        fetch('http://localhost:4502/off')
+          .then((response) => {
+            // got response;
+          })
+      }
     })
+
   }
 
   render() {
@@ -35,7 +51,11 @@ class App extends Component {
         <ul>
           <li onClick={this.onLightClick}><span>{this.state.light ? 'light on' : 'light off'}</span></li>
         </ul>
-        <img onClick={this.onClick} className="noselect" src={splash} height="300"/>
+        <div>
+        <Clock></Clock>
+          <img onClick={this.onClick} className="noselect" src={splash} height="300"/>
+        </div>
+        
       </div>
     );
   }

@@ -14,7 +14,7 @@
   pointer-events: none;
 }
 
-* { cursor: none; }
+*welp { cursor: none; }
 
 
 @media (prefers-reduced-motion: no-preference) {
@@ -71,7 +71,7 @@ li {
   }
 }
 
-.noselect {
+.snoselect {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
