@@ -41,6 +41,7 @@ button {
   font-size: 24px;
   padding: 10px;
   margin: 0 10px;
+  outline: none;
 }
 
 button.no-border {

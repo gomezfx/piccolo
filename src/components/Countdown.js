@@ -31,6 +31,11 @@ class Countdown extends Component {
       } else {
         clearInterval(this.timer);
         this.setState({ timerOn: false });
+
+        fetch('http://localhost:4502/off')
+        .then((response) => {
+          // got response;
+        })
       }
     }, 10);
 
@@ -52,7 +57,8 @@ class Countdown extends Component {
   resetTimer = () => {
     if (this.state.timerOn === false) {
       this.setState({
-        timerTime: this.state.timerStart
+        timerTime: 0,
+        timerStart: 0
       });
     }
 
