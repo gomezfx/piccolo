@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 
 let StyledClock = styled.div`
-font-size: 30px;
-font-family: 'VT323', monospace;
+  font-size: 24px;
 `;
 
 class Clock extends Component {
@@ -11,7 +11,7 @@ class Clock extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        time: new Date().toLocaleString()
+        time: moment().format('dddd MMMM D YYYY, h:mm:ss A')
     };
   }
 
@@ -28,7 +28,8 @@ class Clock extends Component {
 
   tick() {
     this.setState({
-      time: new Date().toLocaleString()
+      time: moment().format('dddd MMMM D YYYY, h:mm:ss A')
+
     });
   }
 
