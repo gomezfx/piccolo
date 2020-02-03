@@ -22,22 +22,26 @@ class Countdown extends Component {
       timerTime: this.state.timerTime,
       timerStart: this.state.timerTime
     });
-    this.timer = setInterval(() => {
-      const newTime = this.state.timerTime - 10;
-      if (newTime >= 0) {
-        this.setState({
-          timerTime: newTime
-        });
-      } else {
-        clearInterval(this.timer);
-        this.setState({ timerOn: false });
+    let _this = this;
+    setTimeout(() => {
+        _this.timer = setInterval(() => {
+            const newTime = _this.state.timerTime - 10;
+            if (newTime >= 0) {
+                _this.setState({
+                timerTime: newTime
+              });
+            } else {
+              clearInterval(_this.timer);
+              _this.setState({ timerOn: false });
+      
+              fetch('http://localhost:4502/off')
+              .then((response) => {
+                // got response;
+              })
+            }
+          }, 10); 
+    }, 500);
 
-        fetch('http://localhost:4502/off')
-        .then((response) => {
-          // got response;
-        })
-      }
-    }, 10);
 
     fetch('http://localhost:4502/on')
     .then((response) => {
