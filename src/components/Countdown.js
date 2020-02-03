@@ -32,7 +32,11 @@ class Countdown extends Component {
               });
             } else {
               clearInterval(_this.timer);
-              _this.setState({ timerOn: false });
+              _this.setState({ 
+                  timerOn: false,
+                  timerTime: 0,
+                  timerStart: 0
+                });
       
               fetch('http://localhost:4502/off')
               .then((response) => {
