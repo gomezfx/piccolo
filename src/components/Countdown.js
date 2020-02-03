@@ -1,5 +1,9 @@
 import React, { Component } from "react";
-import "../App.css";
+import styled from 'styled-components'
+
+let CountdownTime = styled.div`
+    font-size: 60px
+`;
 
 class Countdown extends Component {
   state = {
@@ -9,6 +13,10 @@ class Countdown extends Component {
   };
 
   startTimer = () => {
+    if (this.state.timerTime <= 0) {
+        return;
+    }
+
     this.setState({
       timerOn: true,
       timerTime: this.state.timerTime,
@@ -25,11 +33,21 @@ class Countdown extends Component {
         this.setState({ timerOn: false });
       }
     }, 10);
+
+    fetch('http://localhost:4502/on')
+    .then((response) => {
+      // got response;
+    })
   };
 
   stopTimer = () => {
     clearInterval(this.timer);
     this.setState({ timerOn: false });
+    
+    fetch('http://localhost:4502/off')
+    .then((response) => {
+      // got response;
+    })
   };
   resetTimer = () => {
     if (this.state.timerOn === false) {
@@ -37,6 +55,11 @@ class Countdown extends Component {
         timerTime: this.state.timerStart
       });
     }
+
+    fetch('http://localhost:4502/off')
+    .then((response) => {
+      // got response;
+    })
   };
 
   adjustTimer = input => {
@@ -69,25 +92,17 @@ class Countdown extends Component {
         <div className="Countdown-header">Countdown</div>
         <div className="Countdown-label">Hours : Minutes : Seconds</div>
         <div className="Countdown-display">
-          <button onClick={() => this.adjustTimer("incHours")}>&#8679;</button>
-          <button onClick={() => this.adjustTimer("incMinutes")}>
-            &#8679;
-          </button>
-          <button onClick={() => this.adjustTimer("incSeconds")}>
-            &#8679;
-          </button>
+          <button className="no-border" onClick={() => this.adjustTimer("incHours")}>&#8679;</button>
+          <button className="no-border" onClick={() => this.adjustTimer("incMinutes")}>&#8679;</button>
+          <button className="no-border" onClick={() => this.adjustTimer("incSeconds")}>&#8679;</button>
 
-          <div className="Countdown-time">
-            {hours} : {minutes} : {seconds}
-          </div>
+            <CountdownTime>
+                {hours} : {minutes} : {seconds}
+            </CountdownTime>
 
-          <button onClick={() => this.adjustTimer("decHours")}>&#8681;</button>
-          <button onClick={() => this.adjustTimer("decMinutes")}>
-            &#8681;
-          </button>
-          <button onClick={() => this.adjustTimer("decSeconds")}>
-            &#8681;
-          </button>
+          <button className="no-border" onClick={() => this.adjustTimer("decHours")}>&#8681;</button>
+          <button className="no-border" onClick={() => this.adjustTimer("decMinutes")}>&#8681;</button>
+          <button className="no-border" onClick={() => this.adjustTimer("decSeconds")}>&#8681;</button>
         </div>
 
         {timerOn === false && (timerStart === 0 || timerTime === timerStart) && (

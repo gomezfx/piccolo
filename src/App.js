@@ -6,16 +6,15 @@ import splash from './piccolo.png';
 import Clock from './components/Clock.js';
 import Countdown from './components/Countdown.js';
 
-let Header = styled.div`
-  height: 20px;
-  border-bottom: 1px solid black;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
+let Wrapper = styled.div`
   display: flex;
-  align-items: center;
+  flex-flow: column;
+  height: 100vh;
+`;
+
+let Header = styled.div`
+  border-bottom : 1px solid black;
+  display: flex;
   justify-content: space-between;
   font-size: 24px;
   padding: 10px;
@@ -23,12 +22,10 @@ let Header = styled.div`
 
 let Body = styled.div`
   text-align: center;
-  padding-top: 20px;
-  height: 100vh;
-  width: 100vw;
+  flex: 1;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 class App extends Component {
@@ -74,19 +71,19 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App" style={this.state.backgroundStyle} >
-        <Header>
-          <div onClick={this.onClick}>
-            ☻ Piccolo v0.1.0
-          </div>
-
+      <div className="App" style={this.state.backgroundStyle}>
+        <Wrapper>
+          <Header>
+            <div onClick={this.onClick}>
+              ☻ Piccolo v0.1.0
+            </div>
             <Clock></Clock>
-
+          </Header>
         
-        </Header>
-        <Body>
-
-        </Body>
+          <Body>
+            <Countdown></Countdown>
+          </Body>
+        </Wrapper>
         {/* <ul>
           <li onClick={this.onLightClick}><span>{this.state.light ? 'light on' : 'light off'}</span></li>
         </ul>
@@ -94,7 +91,6 @@ class App extends Component {
         
           <img onClick={this.onClick} className="noselect" src={splash} height="300"/>
         </div> */}
-        <Countdown></Countdown>
       </div>
     );
   }
