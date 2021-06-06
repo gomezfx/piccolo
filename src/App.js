@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import styled from 'styled-components';
-import splash from './piccolo.png';
+import usopp from './usopp.png';
 import Clock from './components/Clock.js';
 import Countdown from './components/Countdown.js';
+import Hygrometer from './components/Hygrometer.js';
+import AC from './components/AC.js';
+import apiService from './services/ApiService.js';
+import login from 'tplink-cloud-api';
 
 let Wrapper = styled.div`
   display: flex;
@@ -15,30 +19,84 @@ let Wrapper = styled.div`
 let Header = styled.div`
   border-bottom : 1px solid black;
   display: flex;
-  justify-content: space-between;
-  font-size: 24px;
-  padding: 10px;
+  justify-content: flex-end;
+  line-height: 80px;
+  height: 80px;
+  padding: 10px 20px;
+  position: relative;
+`;
+
+let Farmer = styled.div`
+  position: absolute;
+  left: 50%;
+  font-size: 2em;
+  transform: translateX(-50%);
 `;
 
 let Body = styled.div`
-  text-align: center;
-  flex: 1;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 20px;
+
+  > * {
+    margin-right: 20px;
+  }
+`;
+
+let Column = styled.div`
+  width: 33.33%;
 `;
 
 class App extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
-      backgroundStyle: {
-          'background': '#'+(Math.random()*0xFFFFFF<<0).toString(16),
+      hygrometerData: {
+        temperature: '?',
+        humidity: '?'
       },
-      light: false
+      acOn: false
     }
+  }
+
+
+  async componentDidMount() {
+    let hData = await this.getHygrometerData();
+    let acData = await this.getAcStatus();
+    console.log(acData);
+    this.setState({
+      hygrometerData: hData,
+      acOn: acData.acOn
+    });
+
+    setInterval(async () => {
+      let hData = await this.getHygrometerData();
+      let acData = await this.getAcStatus();
+      this.setState({
+        hygrometerData: hData,
+        acOn: acData.acOn
+      });
+    }, 10000)
+
+  }
+
+  async getHygrometerData() {
+    let res = await apiService.getHygrometerData();
+    let data = await res.json();
+
+    let update = {
+      temperature: data.temperature,
+      humidity: data.humidity
+    }
+
+    return update;
+  }
+
+  async getAcStatus() {
+    let res = await apiService.getAcStatus();
+    let data = await res.json();
+
+    return data;
   }
 
   onClick = (e) => {
@@ -49,39 +107,19 @@ class App extends Component {
     })
   }
 
-  onLightClick = (e) => {
-
-    this.setState({
-      light: !this.state.light
-    }, () => {
-      if (this.state.light) {
-        fetch('http://localhost:4502/on')
-          .then((response) => {
-            // got response;
-          })
-      } else {
-        fetch('http://localhost:4502/off')
-          .then((response) => {
-            // got response;
-          })
-      }
-    })
-
-  }
 
   render() {
     return (
-      <div className="App" style={this.state.backgroundStyle}>
+      <div className="App">
         <Wrapper>
           <Header>
-            <div onClick={this.onClick}>
-              ☻ Piccolo v0.1.0
-            </div>
+            <Farmer>👨‍🌾</Farmer>
             <Clock></Clock>
           </Header>
         
           <Body>
-            <Countdown></Countdown>
+            <Hygrometer temperature={this.state.hygrometerData.temperature} humidity={this.state.hygrometerData.humidity}></Hygrometer>
+            <AC acOn={this.state.acOn}></AC>
           </Body>
         </Wrapper>
         {/* <ul>
